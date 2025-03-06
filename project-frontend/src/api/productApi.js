@@ -27,7 +27,7 @@ const handleApiError = (error, customMessage) => {
   }
   throw new Error(customMessage)
 }
-
+// api starts here
 export const getAllProducts = async () => {
   try {
     const response = await axiosInstance.get("/products")
