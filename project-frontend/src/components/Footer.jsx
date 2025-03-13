@@ -35,7 +35,7 @@
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-10 px-6 md:px-20">
+    <footer className="bg-gray-900 text-white py-10 lg:py-40 px-6 md:px-20">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center">
         {/* Left Section */}
         <div className="mb-6 md:mb-0">

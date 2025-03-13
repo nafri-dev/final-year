@@ -1,61 +1,70 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const productSchema = new mongoose.Schema(
-  {
-    customId: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-    category: {
-      type: Number,
-      required: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-    },
-    sizes: [
-      {
-        type: String,
-        enum: ["XS", "S", "M", "L", "XL", "XXL"],
-      },
-    ],
-    color: {
-      type: String,
-      required: true,
-    },
-    material: {
-      type: String,
-    },
-    pattern: {
-      type: String,
-    },
-    brand: {
-      type: String,
-    },
-    inStock: {
-      type: Boolean,
-      default: true,
-    },
+const ProductSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
   },
-  { timestamps: true },
-)
+  description: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  category: {
+    type: Number,  // This should match what you're sending from the frontend
+    required: true
+  },
+  sizes: {
+    type: [String],
+    default: []
+  },
+  color: {
+    type: String,
+    default: ""
+  },
+  material: {
+    type: String,
+    default: ""
+  },
+  pattern: {
+    type: String,
+    default: ""
+  },
+  brand: {
+    type: String,
+    default: ""
+  },
+  imageUrl: {
+    type: String,
+    default: ""
+  },
+  inStock: {
+    type: Boolean,
+    default: true
+  },
+  customId: {
+    type: String
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-// Create a text index on the customId field for faster string-based lookups
-productSchema.index({ customId: "text" })
+// Update the updatedAt field before saving
+ProductSchema.pre("save", function(next) {
+  this.updatedAt = Date.now();
+  next();
+});
 
-module.exports = mongoose.model("Product", productSchema)
-
+module.exports = mongoose.model("Product", ProductSchema);
