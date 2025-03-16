@@ -62,8 +62,25 @@ export const orderService = {
   },
 
   getOrderById: async (id) => {
-    const response = await api.get(`/admin/orders/${id}`)
-    return response.data
+    try {
+      console.log(`Fetching order with ID: ${id}`)
+      const response = await api.get(`/admin/orders/${id}`)
+      console.log("Order details response:", response.data)
+      return response.data
+    } catch (error) {
+      console.error("Error fetching order details:", error)
+
+      // Add more detailed error information
+      let errorMessage = "Failed to fetch order details"
+      if (error.response) {
+        errorMessage += `: ${error.response.status} ${error.response.statusText}`
+        if (error.response.data && error.response.data.message) {
+          errorMessage += ` - ${error.response.data.message}`
+        }
+      }
+
+      throw new Error(errorMessage)
+    }
   },
 
   updateOrderStatus: async (id, status) => {

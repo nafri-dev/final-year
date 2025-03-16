@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const orderItemSchema = new mongoose.Schema({
   productId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Product",
     required: true,
   },
@@ -16,7 +16,7 @@ const orderItemSchema = new mongoose.Schema({
     min: 1,
   },
   price: {
-    // Add this field to store individual product price
+    // Individual product price
     type: Number,
     required: true,
     min: 0,
@@ -85,6 +85,12 @@ const orderSchema = new mongoose.Schema({
     type: String,
     enum: ["pending", "paid", "failed"],
     default: "pending",
+  },
+  razorpayOrderId: {
+    type: String,
+  },
+  razorpayPaymentId: {
+    type: String,
   },
 })
 

@@ -12,6 +12,7 @@ import OrderConfirmation from "./pages/OrderConfirmation";
 // import AdminDashboard from './pages/AdminDashboard'
 // import AdminAddProducts from './pages/AdminAddProducts'
 import { ToastContainer } from "react-toastify";
+import OrderSuccess from "./pages/OrderSuccess";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             path="/order-confirmation/:orderId"
             element={<OrderConfirmation />}
           />
+          <Route path="order-success" element={<OrderSuccess />}></Route>
 
           {/* <Route path="/admin/dashboard" element={<AdminDashboard />}/>
       <Route path="/admin/add-products" element={<AdminAddProducts />} /> */}

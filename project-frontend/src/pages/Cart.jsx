@@ -1,28 +1,25 @@
-
+import { useState , useEffect} from "react";
 import { useCart } from "../context/CartContext"
-import { Link, useNavigate } from "react-router-dom"
-import { placeOrder } from "../api/productApi"
-import { toast } from "react-toastify"
-import { useAuth } from "../context/AuthContext"
+import { Link } from "react-router-dom"
+
+
+
+import CheckoutForm from "../components/CheckoutForm"
+
 
 const Cart = () => {
-  const { cart, removeFromCart, updateQuantity, clearCart } = useCart()
-  const navigate = useNavigate()
-  const { user } = useAuth()
+  const { cart, removeFromCart, updateQuantity,refreshCart } = useCart()
+  
+
+  const [isCheckout, setIsCheckout] = useState(false);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-  const handlePlaceOrder = async () => {
-    try {
-      const order = await placeOrder(user.id , total)
-      clearCart()
-      navigate(`/order-confirmation/${order._id}`)
-    } catch (error) {
-      console.error("Error placing order:", error)
-      toast.error("Failed to place order. Please try again.")
-    }
-  }
+  useEffect(() => {
+    refreshCart()
+  }, []);
 
+ 
   if (cart.length === 0) {
     return (
       <div className="container mx-auto my-8 text-center">
@@ -32,6 +29,16 @@ const Cart = () => {
         </Link>
       </div>
     )
+  }
+  if (isCheckout) {
+    
+    return (
+      
+    <CheckoutForm />
+   
+      
+  )
+    
   }
 
   return (
@@ -90,10 +97,10 @@ const Cart = () => {
             </div>
           </div>
           <button
-            onClick={handlePlaceOrder}
+           onClick={() => setIsCheckout(true)}
             className="w-full bg-blue-600 text-white py-2 rounded-lg mt-6 hover:bg-blue-700 transition-colors"
           >
-            Place Order
+          Proceed to checkout
           </button>
         </div>
       </div>

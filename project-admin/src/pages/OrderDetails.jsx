@@ -10,15 +10,21 @@ const OrderDetails = () => {
   const { id } = useParams()
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [updatingStatus, setUpdatingStatus] = useState(false)
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
+        setLoading(true)
+        console.log("Fetching order with ID:", id)
         const response = await orderService.getOrderById(id)
+        console.log("Order details received:", response)
         setOrder(response)
+        setError(null)
       } catch (error) {
         console.error("Error fetching order details:", error)
+        setError("Failed to load order details. Please try again.")
         toast.error("Failed to load order details")
       } finally {
         setLoading(false)
@@ -47,6 +53,18 @@ const OrderDetails = () => {
     return (
       <div className="flex justify-center items-center h-full">
         <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Error Loading Order</h2>
+        <p className="text-red-500 mb-4">{error}</p>
+        <Link to="/orders" className="mt-4 inline-block text-blue-600 hover:text-blue-800">
+          Back to Orders
+        </Link>
       </div>
     )
   }
@@ -81,7 +99,10 @@ const OrderDetails = () => {
 
   // Calculate item price if not available
   const getItemPrice = (item) => {
-    if (item.price) return item.price
+    // If price is directly available in the item
+    if (item.price !== undefined && item.price !== null) {
+      return item.price
+    }
 
     // If price is not available in the item, calculate from total and quantity
     if (item.total && item.quantity) {
@@ -99,6 +120,10 @@ const OrderDetails = () => {
     const price = getItemPrice(item)
     return price * item.quantity
   }
+
+  // Safely access user data
+  const userEmail = order.userId?.email || "N/A"
+  const userName = order.userId?.username || "N/A"
 
   return (
     <div className="space-y-6">
@@ -211,10 +236,10 @@ const OrderDetails = () => {
             </div>
             <div className="p-6">
               <p className="text-sm text-gray-700 mb-1">
-                <span className="font-medium">Name:</span> {order.userId?.username || "N/A"}
+                <span className="font-medium">Name:</span> {userName}
               </p>
               <p className="text-sm text-gray-700">
-                <span className="font-medium">Email:</span> {order.userId?.email || "N/A"}
+                <span className="font-medium">Email:</span> {userEmail}
               </p>
             </div>
           </div>

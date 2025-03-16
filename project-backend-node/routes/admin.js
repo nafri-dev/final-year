@@ -64,7 +64,8 @@ const upload = multer({
   storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
   fileFilter: (req, file, cb) => {
-    const filetypes = /jpeg|jpg|png|gif/
+    const filetypes = /jpeg|jpg|png|gif|webp|avif/;
+
     const mimetype = filetypes.test(file.mimetype)
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
 
@@ -349,23 +350,40 @@ router.get("/orders", authenticateAdmin, async (req, res) => {
   }
 });
 
-// Get order by ID
 router.get("/orders/:id", authenticateAdmin, async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id)
-      .populate("userId", "email username")
-      .populate("items.productId", "name price imageUrl");
+    console.log("Fetching order with ID:", req.params.id)
 
-    if (!order) {
-      return res.status(404).json({ message: "Order not found" });
+    // Validate the order ID format
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid order ID format" })
     }
 
-    res.json(order);
+    // Try to find the order with safer population
+    const order = await Order.findById(req.params.id).populate("userId", "email username")
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" })
+    }
+
+    // Handle case where userId might be null or invalid
+    const safeOrder = order.toObject()
+    if (!safeOrder.userId) {
+      safeOrder.userId = { email: "Unknown", username: "Unknown" }
+    }
+
+    console.log("Order found:", safeOrder._id)
+    res.json(safeOrder)
   } catch (error) {
-    console.error("Get order error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error fetching order details:", error)
+    console.error("Error stack:", error.stack)
+    res.status(500).json({
+      message: "Error fetching order details",
+      error: error.message,
+      stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+    })
   }
-});
+})
 
 // Update order status
 router.put("/orders/:id/status", authenticateAdmin, async (req, res) => {

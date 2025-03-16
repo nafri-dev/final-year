@@ -7,10 +7,10 @@ import { Tooltip } from 'react-tooltip'
 import { useState } from "react";
 
 export default function Header() {
-  const { cart } = useCart();
+  const { cartCount } = useCart()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
-  const cartItemsCount = Array.isArray(cart) ? cart.reduce((sum, item) => sum + item.quantity, 0) : 0;
+ 
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -22,7 +22,7 @@ export default function Header() {
            
             <Link to="/" className=" flex  flex-row">
             <img src="/assets/newlogo.jpg" className="h-12 w-15 "/>
-             <p className="text-xl font-mono text-center justify-center align-middle mt-2"> Kumari Textiles</p>
+             <p className="hidden lg:flex text-xl font-mono text-center justify-center align-middle mt-2"> Kumari Textiles</p>
             </Link>
             
 
@@ -62,9 +62,9 @@ export default function Header() {
 
             <Link to="/cart" className="relative">
               <ShoppingCart size={24} className="text-gray-600" />
-              {cartItemsCount > 0 && (
+              {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartItemsCount}
+                  {cartCount}
                 </span>
               )}
             </Link>
