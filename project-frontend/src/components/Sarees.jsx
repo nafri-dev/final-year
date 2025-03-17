@@ -94,8 +94,8 @@ const Sarees = () => {
                     className="absolute inset-0 bg-contain bg-center p-25"
                     style={{ backgroundImage: `url(${displaySarees[0].imageUrl})`, opacity: 0.9 }}
                   ></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 p-6 text-white z-10">
+                  <div className="absolute inset-0 bg-gradient-to-t from-yellow-50 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 p-6 text-black z-10">
                     <h3 className="text-xl md:text-2xl font-bold mb-2 group-hover:text-yellow-300 transition-colors">
                       {displaySarees[0].name}
                     </h3>

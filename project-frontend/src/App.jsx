@@ -8,11 +8,13 @@ import SingleProduct from "./pages/SingleProduct";
 import Products from "./pages/Products";
 import Cart from "./pages/Cart";
 import CategoryPage from "./pages/CategoryPage";
-import OrderConfirmation from "./pages/OrderConfirmation";
+// import OrderConfirmation from "./pages/OrderConfirmation";
 // import AdminDashboard from './pages/AdminDashboard'
 // import AdminAddProducts from './pages/AdminAddProducts'
 import { ToastContainer } from "react-toastify";
 import OrderSuccess from "./pages/OrderSuccess";
+import OrderHistory from "./pages/OrderHistory";
+import OrderDetail from "./pages/OrderDetail";
 
 function App() {
   return (
@@ -28,11 +30,27 @@ function App() {
           <Route path="/product/:id" element={<SingleProduct />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/category/:category_id" element={<CategoryPage />} />
-          <Route
+          {/* <Route
             path="/order-confirmation/:orderId"
             element={<OrderConfirmation />}
-          />
+          /> */}
           <Route path="order-success" element={<OrderSuccess />}></Route>
+          <Route
+              path="/orders"
+              element={
+               
+                  <OrderHistory />
+             
+              }
+            />
+            <Route
+              path="/order/:id"
+              element={
+                
+                  <OrderDetail />
+               
+              }
+            />
 
           {/* <Route path="/admin/dashboard" element={<AdminDashboard />}/>
       <Route path="/admin/add-products" element={<AdminAddProducts />} /> */}
