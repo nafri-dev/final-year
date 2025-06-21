@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000
 // CORS configuration
 app.use(
   cors({
-    origin: [process.env.VITE_FRONTEND_URL || "http://localhost:5173", "http://localhost:5174"],
+    origin: [process.env.VITE_FRONTEND_URL || "http://localhost:5173", "http://localhost:5174", "https://final-year-q8mx.vercel.app"],
     optionsSuccessStatus: 200,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
