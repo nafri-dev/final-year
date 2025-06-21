@@ -15,7 +15,11 @@ const PORT = process.env.PORT || 5000
 app.use(
   cors({
     origin: [process.env.VITE_FRONTEND_URL || "http://localhost:5173", "http://localhost:5174"],
+    optionsSuccessStatus: 200,
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    
   })
 )
 

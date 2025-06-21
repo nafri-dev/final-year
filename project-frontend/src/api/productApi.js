@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_BASE_URL = import.meta.env.API_URL ||"https://final-year-azure.vercel.app/api"
+const API_BASE_URL = import.meta.env.API_URL || [ "https://final-year-azure.vercel.app/api", "http://localhost:3000/api" ]
 
 // Update the axiosInstance to include the auth token from localStorage
 const axiosInstance = axios.create({
