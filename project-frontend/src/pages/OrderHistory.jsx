@@ -6,6 +6,7 @@ import { getUserOrders } from "../api/productApi"
 import { useAuth } from "../context/AuthContext"
 import toast from "react-hot-toast"
 import { ChevronRight, Package } from "lucide-react"
+import Header from "../components/Header"
 
 const OrderHistory = () => {
   const { user } = useAuth()
@@ -61,6 +62,8 @@ const OrderHistory = () => {
 
   if (error) {
     return (
+    
+   
       <div className="max-w-4xl mx-auto p-4 text-center">
         <div className="bg-white rounded-lg shadow-md p-8 my-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Error Loading Orders</h1>
@@ -92,6 +95,8 @@ const OrderHistory = () => {
   }
 
   return (
+    <>
+    <Header />
     <div className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">My Orders</h1>
 
@@ -128,6 +133,7 @@ const OrderHistory = () => {
         ))}
       </div>
     </div>
+    </>
   )
 }
 

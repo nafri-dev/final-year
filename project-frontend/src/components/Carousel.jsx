@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useCallback } from "react"
-import { Link } from "react-router-dom"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Carousel = () => {
-  const [activeSlide, setActiveSlide] = useState(0)
-  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const slides = [
     {
       image: "/assets/ban2.webp",
@@ -29,32 +29,32 @@ const Carousel = () => {
       cta: "View Deals",
       link: "/products",
     },
-  ]
+  ];
 
   const nextSlide = useCallback(() => {
     if (!isTransitioning) {
-      setIsTransitioning(true)
-      setActiveSlide((prev) => (prev + 1) % slides.length)
-      setTimeout(() => setIsTransitioning(false), 500)
+      setIsTransitioning(true);
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+      setTimeout(() => setIsTransitioning(false), 500);
     }
-  }, [isTransitioning, slides.length])
+  }, [isTransitioning, slides.length]);
 
   const prevSlide = useCallback(() => {
     if (!isTransitioning) {
-      setIsTransitioning(true)
-      setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length)
-      setTimeout(() => setIsTransitioning(false), 500)
+      setIsTransitioning(true);
+      setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
+      setTimeout(() => setIsTransitioning(false), 500);
     }
-  }, [isTransitioning, slides.length])
+  }, [isTransitioning, slides.length]);
 
   // Auto-advance slides
   useEffect(() => {
     const interval = setInterval(() => {
-      nextSlide()
-    }, 5000)
+      nextSlide();
+    }, 5000);
 
-    return () => clearInterval(interval)
-  }, [nextSlide])
+    return () => clearInterval(interval);
+  }, [nextSlide]);
 
   return (
     <div className="relative overflow-hidden">
@@ -79,20 +79,29 @@ const Carousel = () => {
                 <div className="max-w-lg">
                   <h2
                     className="text-white text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 opacity-0 animate-fadeIn"
-                    style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+                    style={{
+                      animationDelay: "0.3s",
+                      animationFillMode: "forwards",
+                    }}
                   >
                     {slide.title}
                   </h2>
                   <p
                     className="text-white/90 text-sm md:text-lg mb-4 md:mb-6 opacity-0 animate-fadeIn"
-                    style={{ animationDelay: "0.5s", animationFillMode: "forwards" }}
+                    style={{
+                      animationDelay: "0.5s",
+                      animationFillMode: "forwards",
+                    }}
                   >
                     {slide.subtitle}
                   </p>
                   <Link
                     to={slide.link}
                     className="inline-block bg-white text-black px-6 py-2 md:py-3 rounded-full font-medium hover:bg-yellow-400 transition-colors opacity-0 animate-fadeIn"
-                    style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}
+                    style={{
+                      animationDelay: "0.7s",
+                      animationFillMode: "forwards",
+                    }}
                   >
                     {slide.cta}
                   </Link>
@@ -133,8 +142,7 @@ const Carousel = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Carousel
-
+export default Carousel;
