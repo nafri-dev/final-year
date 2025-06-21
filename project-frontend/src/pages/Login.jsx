@@ -8,7 +8,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
-  const baseURL = import.meta.env.API_URL ||"https://final-year-azure.vercel.app"
+  const baseURL = import.meta.env.API_URL
 
   const handleSubmit = async (e) => {
     e.preventDefault();
