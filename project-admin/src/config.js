@@ -1,3 +1,3 @@
 
-export const API_URL =  "http://localhost:3000/api"
+export const VITE_FRONTEND_URL="https://final-year-q8mx.vercel.app/"
 

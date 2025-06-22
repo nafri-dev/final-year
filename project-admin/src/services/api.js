@@ -1,9 +1,9 @@
 import axios from "axios"
-import { API_URL } from "../config"
+import { VITE_FRONTEND_URL } from "../config"
 
 // Create an axios instance with default config
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: VITE_FRONTEND_URL,
 })
 
 // Add a request interceptor to include the auth token in all requests
